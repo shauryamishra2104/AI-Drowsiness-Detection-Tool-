@@ -31,7 +31,7 @@ def detector_page():
     alarm_placeholder = st.empty()
 
     if context.video_processor:
-        if ctx.video_processor.alarm_triggered:
+        if context.video_processor.alarm_triggered:
             with open("alarm.mp3", "rb") as f:
                 audio_bytes = f.read()
 
