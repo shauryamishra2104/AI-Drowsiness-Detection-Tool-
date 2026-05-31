@@ -20,7 +20,10 @@ def detector_page():
         video_processor_factory=DrowsinessVideoProcessor,
         mode=WebRtcMode.SENDRECV,
         rtc_configuration={
-            "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+            "iceServers": [
+                {"urls": ["stun:stun.l.google.com:19302"]},
+                {"urls": ["stun:stun1.l.google.com:19302"]}
+            ]
         },
             media_stream_constraints={
             "video": True,
