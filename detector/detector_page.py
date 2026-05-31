@@ -2,9 +2,6 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer,WebRtcMode
 from detector.drowsiness import DrowsinessVideoProcessor
 from static.style import load_detector_css
-import base64
-import time
-
 
 def detector_page():
     load_detector_css()
@@ -15,31 +12,20 @@ def detector_page():
 
     st.write("### Live Camera Feed")
         
-    # webrtc_streamer(
-    #     key="Drowsiness-detection",
-    #     video_processor_factory=DrowsinessVideoProcessor,
-    #     mode=WebRtcMode.SENDRECV,
-    #     rtc_configuration={
-    #         "iceServers": [
-    #             {"urls": ["stun:stun.l.google.com:19302"]},
-    #             {"urls": ["stun:stun1.l.google.com:19302"]}
-    #         ]
-    #     },
-    #         media_stream_constraints={
-    #         "video": True,
-    #         "audio":False,
-    #     },
-    #     async_processing=False,
-    # )
-    
-
     webrtc_streamer(
-    key="test",
-    mode=WebRtcMode.SENDRECV,
-    media_stream_constraints={
-        "video": True,
-        "audio": False,
-    },
+        key="Drowsiness-detection",
+        video_processor_factory=DrowsinessVideoProcessor,
+        mode=WebRtcMode.SENDRECV,
+        rtc_configuration={
+            "iceServers": [
+                {"urls": ["stun:stun.l.google.com:19302"]}
+            ]
+        },
+            media_stream_constraints={
+            "video": True,
+            "audio":False,
+        },
+        async_processing=False,
     )
 
     st.markdown(
@@ -62,14 +48,6 @@ def detector_page():
         unsafe_allow_html=True,
     )
     st.markdown("<br><br>", unsafe_allow_html=True)
-    
-    # if context.video_processor:
-
-    #     if context.video_processor.alarm_triggered:
-
-    #         st.error("🚨 Drowsiness / Yawning Detected!")
-
-    #         st.audio("alarm.mp3")
 
     logout_button = st.button("Logout", key="logout button")
     if logout_button:
