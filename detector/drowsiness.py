@@ -5,7 +5,6 @@ import streamlit as st
 import cv2
 import av
 from detector.process import calculation as calc
-import winsound
 
 
 LEFT_EYE = [33, 160, 158, 133, 153, 144]
