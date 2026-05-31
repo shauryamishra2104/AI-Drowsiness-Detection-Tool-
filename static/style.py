@@ -47,17 +47,23 @@ def load_home_css():
         backdrop-filter: blur(8px);
     }
 
-    /* Input field */
+        /* Input container */
     div[data-baseweb="input"] {
-        background-color: black;
+        background-color: #000000 !important;
         border-radius: 10px;
-        border: 1px solid #334155;
-        padding: 8px;
+        border: 1px solid #334155 !important;
     }
 
-    input {
-        color: black !important;
-        font-size:18px !important;
+    /* Actual text box */
+    div[data-baseweb="input"] input {
+        background-color: #000000 !important;
+        color: white !important;
+        font-size: 18px !important;
+    }
+
+    /* Placeholder text */
+    div[data-baseweb="input"] input::placeholder {
+        color: #94a3b8 !important;
     }
 
     /* Label text */
