@@ -15,32 +15,32 @@ def detector_page():
 
     st.write("### Live Camera Feed")
         
-    webrtc_streamer(
-        key="Drowsiness-detection",
-        video_processor_factory=DrowsinessVideoProcessor,
-        mode=WebRtcMode.SENDRECV,
-        rtc_configuration={
-            "iceServers": [
-                {"urls": ["stun:stun.l.google.com:19302"]},
-                {"urls": ["stun:stun1.l.google.com:19302"]}
-            ]
-        },
-            media_stream_constraints={
-            "video": True,
-            "audio":False,
-        },
-        async_processing=False,
-    )
+    # webrtc_streamer(
+    #     key="Drowsiness-detection",
+    #     video_processor_factory=DrowsinessVideoProcessor,
+    #     mode=WebRtcMode.SENDRECV,
+    #     rtc_configuration={
+    #         "iceServers": [
+    #             {"urls": ["stun:stun.l.google.com:19302"]},
+    #             {"urls": ["stun:stun1.l.google.com:19302"]}
+    #         ]
+    #     },
+    #         media_stream_constraints={
+    #         "video": True,
+    #         "audio":False,
+    #     },
+    #     async_processing=False,
+    # )
     
 
-    # webrtc_streamer(
-    # key="test",
-    # mode=WebRtcMode.SENDRECV,
-    # media_stream_constraints={
-    #     "video": True,
-    #     "audio": False,
-    # },
-    # )
+    webrtc_streamer(
+    key="test",
+    mode=WebRtcMode.SENDRECV,
+    media_stream_constraints={
+        "video": True,
+        "audio": False,
+    },
+    )
 
     st.markdown(
         """
