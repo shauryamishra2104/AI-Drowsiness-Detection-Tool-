@@ -27,7 +27,7 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
         )
         self.sleep_counter = 0
         self.yawn_counter = 0
-        self.alarm_triggered = False
+        # self.alarm_triggered = False
         
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -56,12 +56,12 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
                     self.sleep_counter += 1
                 else:
                     self.sleep_counter = 0
-                    self.alarm_triggered = False
+                    # self.alarm_triggered = False
                 
                 if self.sleep_counter >= EAR_CONSECUTIVE_FRAMES:
                     cv2.putText(img, "DROWSINESS DETECTED!", (50, 50), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-                    self.alarm_triggered = True
+                    # self.alarm_triggered = True
 
                 if mar > MAR_THRESHOLD:
                     self.yawn_counter += 1
@@ -72,8 +72,8 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
                     cv2.putText(img, "YAWNING WARNING!", (50, 100), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 3)
                    
-                if self.yawn_counter == MAR_CONSECUTIVE_FRAMES:
-                    self.alarm_triggered = True
+                # if self.yawn_counter == MAR_CONSECUTIVE_FRAMES:
+                #     self.alarm_triggered = True
                 
                 cv2.putText(img, f"EAR: {avg_ear:.2f}", (w - 150, 30), 
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)

@@ -26,7 +26,7 @@ def detector_page():
             "video": True,
             "audio":False,
         },
-        async_processing=True,
+        async_processing=False,
     )
 
     st.markdown(
@@ -50,13 +50,13 @@ def detector_page():
     )
     st.markdown("<br><br>", unsafe_allow_html=True)
     
-    if context.video_processor:
+    # if context.video_processor:
 
-        if context.video_processor.alarm_triggered:
+    #     if context.video_processor.alarm_triggered:
 
-            st.error("🚨 Drowsiness / Yawning Detected!")
+    #         st.error("🚨 Drowsiness / Yawning Detected!")
 
-            st.audio("alarm.mp3")
+    #         st.audio("alarm.mp3")
 
     logout_button = st.button("Logout", key="logout button")
     if logout_button:
