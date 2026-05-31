@@ -35,8 +35,6 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
         
         rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.face_mesh.process(rgb_frame)
-        
-        self.alarm_triggered = False
 
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
@@ -58,12 +56,11 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
                     self.sleep_counter += 1
                 else:
                     self.sleep_counter = 0
+                    self.alarm_triggered = False
                 
                 if self.sleep_counter >= EAR_CONSECUTIVE_FRAMES:
                     cv2.putText(img, "DROWSINESS DETECTED!", (50, 50), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-
-                if self.sleep_counter == EAR_CONSECUTIVE_FRAMES:
                     self.alarm_triggered = True
 
                 if mar > MAR_THRESHOLD:
@@ -71,7 +68,7 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
                 else:
                     self.yawn_counter = 0
                     
-                if self.yawn_counter >= MAR_CONSECUTIVE_FRAMES:
+                if self.yawn_counter > MAR_CONSECUTIVE_FRAMES:
                     cv2.putText(img, "YAWNING WARNING!", (50, 100), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 3)
                    
