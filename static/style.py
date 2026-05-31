@@ -56,7 +56,7 @@ def load_home_css():
     }
 
     input {
-        color: white !important;
+        color: black !important;
         font-size:18px !important;
     }
 
