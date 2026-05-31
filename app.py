@@ -5,6 +5,7 @@ from static.style import load_home_css
 
 st.set_page_config(
     page_title="Drowsiness Detection Tool",
+    page_icon=r"C:\Users\shaurya mishra\Drowsiness Detection Tool\static\gemini-svg.svg",
     layout="centered"
     )   
 
