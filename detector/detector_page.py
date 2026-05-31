@@ -2,7 +2,8 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer,WebRtcMode
 from detector.drowsiness import DrowsinessVideoProcessor
 from static.style import load_detector_css
-
+import base64
+import time
 
 
 def detector_page():
@@ -14,7 +15,7 @@ def detector_page():
 
     st.write("### Live Camera Feed")
         
-    webrtc_streamer(
+    context = webrtc_streamer(
         key="Drowsiness-detection",
         video_processor_factory=DrowsinessVideoProcessor,
         mode=WebRtcMode.SENDRECV,
@@ -26,6 +27,24 @@ def detector_page():
             "audio":False,
         }
     )
+
+    alarm_placeholder = st.empty()
+
+    if ctx.video_processor:
+        if ctx.video_processor.alarm_triggered:
+            with open("alarm.mp3", "rb") as f:
+                audio_bytes = f.read()
+
+            b64 = base64.b64encode(audio_bytes).decode()
+
+            alarm_placeholder.markdown(
+                f"""
+                <audio autoplay>
+                    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                </audio>
+                """,
+                unsafe_allow_html=True,
+            )
 
     st.markdown(
             """

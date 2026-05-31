@@ -28,6 +28,7 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
         )
         self.sleep_counter = 0
         self.yawn_counter = 0
+        self.alarm_triggered = False
         
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -35,6 +36,8 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
         
         rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.face_mesh.process(rgb_frame)
+        
+        self.alarm_triggered = False
 
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
@@ -62,7 +65,7 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
 
                 if self.sleep_counter == EAR_CONSECUTIVE_FRAMES:
-                    winsound.Beep(1000, 1500)
+                    self.alarm_triggered = True
 
                 if mar > MAR_THRESHOLD:
                     self.yawn_counter += 1
@@ -74,7 +77,7 @@ class DrowsinessVideoProcessor(VideoProcessorBase):
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 3)
                    
                 if self.yawn_counter == MAR_CONSECUTIVE_FRAMES:
-                    winsound.Beep(1000, 500)
+                    self.alarm_triggered = True
                 
                 cv2.putText(img, f"EAR: {avg_ear:.2f}", (w - 150, 30), 
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
