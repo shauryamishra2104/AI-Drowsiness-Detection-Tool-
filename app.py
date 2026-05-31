@@ -34,7 +34,7 @@ def home_page():
     if username:
         st.session_state["username"] = username
 
-    submit_button = st.button("Start Session", width="stretch",key="start button")
+    submit_button = st.button("Start Session",key="start button")
     
     if submit_button:
         st.session_state["login"] = "Detector"
