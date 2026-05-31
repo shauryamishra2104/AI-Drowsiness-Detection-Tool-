@@ -15,7 +15,7 @@ def detector_page():
 
     st.write("### Live Camera Feed")
         
-    context = webrtc_streamer(
+    webrtc_streamer(
         key="Drowsiness-detection",
         video_processor_factory=DrowsinessVideoProcessor,
         mode=WebRtcMode.SENDRECV,
@@ -31,6 +31,16 @@ def detector_page():
         },
         async_processing=False,
     )
+    
+
+    # webrtc_streamer(
+    # key="test",
+    # mode=WebRtcMode.SENDRECV,
+    # media_stream_constraints={
+    #     "video": True,
+    #     "audio": False,
+    # },
+    # )
 
     st.markdown(
         """
