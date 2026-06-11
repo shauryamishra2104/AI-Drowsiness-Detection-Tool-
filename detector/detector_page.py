@@ -5,7 +5,7 @@ from static.style import load_detector_css
 
 
 
-RTC_CONFIG = RTCConfiguration({
+RTC_CONFIG ={
         "iceServers": [
             {"urls": ["stun:stun.l.google.com:19302"]},
             {"urls": ["stun:stun1.l.google.com:19302"]},
@@ -25,7 +25,7 @@ RTC_CONFIG = RTCConfiguration({
                 "credential": "openrelayproject",
             },
         ]
-    })
+    }
 
 
 def detector_page():
@@ -46,7 +46,7 @@ def detector_page():
             "video": True,
             "audio":False,
         },
-        async_processing=False,
+        async_processing=True,
     )
 
     st.markdown(
