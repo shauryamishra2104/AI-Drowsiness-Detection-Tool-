@@ -1,4 +1,6 @@
 streamlit==1.45.1
+aiortc>=1.11.0
+aioice==0.10.1
 streamlit-webrtc==0.63.11
 mediapipe==0.10.14
 opencv-python-headless==4.10.0.84

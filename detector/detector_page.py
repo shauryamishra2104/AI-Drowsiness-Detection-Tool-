@@ -3,16 +3,9 @@ from streamlit_webrtc import webrtc_streamer,WebRtcMode,RTCConfiguration
 from detector.drowsiness import DrowsinessVideoProcessor
 from static.style import load_detector_css
 
-def detector_page():
-    load_detector_css()
-    username =st.session_state.get("username")
-    st.title(f"Hii!! {username}")
 
-    st.divider()
 
-    st.write("### Live Camera Feed")
-    
-    RTC_CONFIG = RTCConfiguration({
+RTC_CONFIG = RTCConfiguration({
         "iceServers": [
             {"urls": ["stun:stun.l.google.com:19302"]},
             {"urls": ["stun:stun1.l.google.com:19302"]},
@@ -35,6 +28,14 @@ def detector_page():
     })
 
 
+def detector_page():
+    load_detector_css()
+    username =st.session_state.get("username")
+    st.title(f"Hii!! {username}")
+
+    st.divider()
+
+    st.write("### Live Camera Feed")
         
     webrtc_streamer(
         key="Drowsiness-detection",
