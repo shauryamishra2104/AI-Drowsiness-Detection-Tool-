@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer,WebRtcMode
+from streamlit_webrtc import webrtc_streamer,WebRtcMode,RTCConfiguration
 from detector.drowsiness import DrowsinessVideoProcessor
 from static.style import load_detector_css
 
@@ -11,16 +11,36 @@ def detector_page():
     st.divider()
 
     st.write("### Live Camera Feed")
+    
+    RTC_CONFIG = RTCConfiguration({
+        "iceServers": [
+            {"urls": ["stun:stun.l.google.com:19302"]},
+            {"urls": ["stun:stun1.l.google.com:19302"]},
+            {
+                "urls": ["turn:openrelay.metered.ca:80"],
+                "username": "openrelayproject",
+                "credential": "openrelayproject",
+            },
+            {
+                "urls": ["turn:openrelay.metered.ca:443"],
+                "username": "openrelayproject",
+                "credential": "openrelayproject",
+            },
+            {
+                "urls": ["turn:openrelay.metered.ca:443?transport=tcp"],
+                "username": "openrelayproject",
+                "credential": "openrelayproject",
+            },
+        ]
+    })
+
+
         
     webrtc_streamer(
         key="Drowsiness-detection",
         video_processor_factory=DrowsinessVideoProcessor,
         mode=WebRtcMode.SENDRECV,
-        rtc_configuration={
-            "iceServers": [
-                {"urls": ["stun:stun.l.google.com:19302"]}
-            ]
-        },
+        rtc_configuration=RTC_CONFIG,
             media_stream_constraints={
             "video": True,
             "audio":False,
