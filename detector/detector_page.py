@@ -2,30 +2,17 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer,WebRtcMode,RTCConfiguration
 from detector.drowsiness import DrowsinessVideoProcessor
 from static.style import load_detector_css
+import os
+from twilio.rest import Client
 
+def get_ice_servers():
+    account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    client = Client(account_sid, auth_token)
+    token = client.tokens.create()
+    return token.ice_servers
 
-
-RTC_CONFIG = RTCConfiguration({
-    "iceServers": [
-        {"urls": ["stun:stun.l.google.com:19302"]},
-        {"urls": ["stun:stun1.l.google.com:19302"]},
-        {
-            "urls": ["turn:openrelay.metered.ca:80"],
-            "username": "openrelayproject",
-            "credential": "openrelayproject",
-        },
-        {
-            "urls": ["turn:openrelay.metered.ca:443"],
-            "username": "openrelayproject",
-            "credential": "openrelayproject",
-        },
-        {
-            "urls": ["turn:openrelay.metered.ca:443?transport=tcp"],
-            "username": "openrelayproject",
-            "credential": "openrelayproject",
-        },
-    ]
-})
+RTC_CONFIG = RTCConfiguration({"iceServers": get_ice_servers()})
 
 
 def detector_page():
@@ -46,7 +33,7 @@ def detector_page():
             "video": True,
             "audio":False,
         },
-        async_processing=False,
+        async_processing=True,
     )
 
     st.markdown(
